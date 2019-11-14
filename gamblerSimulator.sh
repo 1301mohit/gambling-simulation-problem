@@ -8,17 +8,34 @@ PERCENTAGE=50
 winningStake=$(( $stake + ($PERCENTAGE * $stake) / 100   ))
 lossingStake=$(( $stake - ($PERCENTAGE * $stake) / 100 ))
 BET=1
+numberOfDays=20
+totalAmount=0
+
+#dictionary
+declare -A amounts
 
 won=1
 loose=0
-
-while [ $stake -lt $winningStake ] && [ $stake -gt $lossingStake ]
+for (( day=1; day<=$numberOfDays; day++ ))
 do
-	checkRandom=$((RANDOM%2))
-	if [ $checkRandom -eq $won ]
-	then
-		stake=$(($stake + $BET))
-	else
-		stake=$((stake - $BET))
-	fi
+	stake=100
+	while [ $stake -lt $winningStake ] && [ $stake -gt $lossingStake ]
+	do
+		checkRandom=$((RANDOM%2))
+		if [ $checkRandom -eq $won ]
+		then
+			stake=$(($stake + $BET))
+		else
+			stake=$((stake - $BET))
+		fi
+	done
+	amounts[$day]=$(($stake-100))
+	totalAmount=$(($totalAmount+$(($stake-100))))
 done
+
+echo ${!amounts[@]} 
+echo ${amounts[@]} 
+echo "Total Amount:"$totalAmount
+
+
+
