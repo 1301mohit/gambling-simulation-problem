@@ -24,37 +24,42 @@ declare -A luckyOrUnlucky
 
 won=1
 loose=0
-for (( day=1; day<=$numberOfDays; day++ ))
+
+while [ $totalAmount -ge 0 ]
 do
-	stake=100
-	while [ $stake -lt $winningStake ] && [ $stake -gt $lossingStake ]
+	for (( day=1; day<=$numberOfDays; day++ ))
 	do
-		checkRandom=$((RANDOM%2))
-		if [ $checkRandom -eq $won ]
+		stake=100
+		while [ $stake -lt $winningStake ] && [ $stake -gt $lossingStake ]
+		do
+			checkRandom=$((RANDOM%2))
+			if [ $checkRandom -eq $won ]
+			then
+				stake=$(($stake + $BET))
+			else
+				stake=$((stake - $BET))
+			fi
+		done
+		amounts[$day]=$(($stake-100))
+		previousTotalAmount=$totalAmount
+		totalAmount=$(($totalAmount+$(($stake-100))))
+		if [ $totalAmount -ge $previousTotalAmount ]
 		then
-			stake=$(($stake + $BET))
+			lukiestDay=$day
 		else
-			stake=$((stake - $BET))
+			unLukiestDay=$day
+		fi
+		echo $totalAmount
+		resultantAmount[$day]=$totalAmount
+		if [ ${amounts[$day]} -eq 50 ]
+		then
+			((wonCount++))
+		else
+			((lossCount++))
 		fi
 	done
-	amounts[$day]=$(($stake-100))
-	previousTotalAmount=$totalAmount
-	totalAmount=$(($totalAmount+$(($stake-100))))
-	if [ $totalAmount -ge $previousTotalAmount ]
-	then
-		lukiestDay=$day
-	else
-		unLukiestDay=$day
-	fi
-	echo $totalAmount
-	resultantAmount[$day]=$totalAmount
-	if [ ${amounts[$day]} -eq 50 ]
-	then
-		((wonCount++))
-	else
-		((lossCount++))
-	fi
 done
+
 
 echo ${!amounts[@]} 
 echo ${amounts[@]} 
