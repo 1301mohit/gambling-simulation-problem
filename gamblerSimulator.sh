@@ -16,6 +16,8 @@ count=1
 previousTotalAmount=0
 lukiestDay=0
 unLukiestDay=0
+isContinue=0
+checkForWonOrLoss=50
 
 #dictionary
 declare -A amounts
@@ -25,7 +27,7 @@ declare -A luckyOrUnlucky
 won=1
 loose=0
 
-while [ $totalAmount -ge 0 ]
+while [ $totalAmount -ge $isContinue ]
 do
 	for (( day=1; day<=$numberOfDays; day++ ))
 	do
@@ -51,7 +53,7 @@ do
 		fi
 		echo $totalAmount
 		resultantAmount[$day]=$totalAmount
-		if [ ${amounts[$day]} -eq 50 ]
+		if [ ${amounts[$day]} -eq $checkForWonOrLoss ]
 		then
 			((wonCount++))
 		else
