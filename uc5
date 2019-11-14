@@ -1,7 +1,3 @@
-#!/bin/bash -x
-
-echo Welcome to Gambling Simulator
-
 #Variable
 stake=100
 PERCENTAGE=50
@@ -10,8 +6,6 @@ lossingStake=$(( $stake - ($PERCENTAGE * $stake) / 100 ))
 BET=1
 numberOfDays=20
 totalAmount=0
-wonCount=0
-lossCount=0
 
 #dictionary
 declare -A amounts
@@ -33,21 +27,8 @@ do
 	done
 	amounts[$day]=$(($stake-100))
 	totalAmount=$(($totalAmount+$(($stake-100))))
-	if [ ${amounts[$day]} -eq 50 ]
-	then
-		((wonCount++))
-	else
-		((lossCount++))
-	fi
 done
 
 echo ${!amounts[@]} 
 echo ${amounts[@]} 
 echo "Total Amount:"$totalAmount
-echo "Total Won:"$wonCount
-echo "Total loss:"$lossCount
-
-
-
-
-
