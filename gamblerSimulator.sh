@@ -12,9 +12,15 @@ numberOfDays=20
 totalAmount=0
 wonCount=0
 lossCount=0
+count=1
+previousTotalAmount=0
+lukiestDay=0
+unLukiestDay=0
 
 #dictionary
 declare -A amounts
+declare -A resultantAmount
+declare -A luckyOrUnlucky
 
 won=1
 loose=0
@@ -32,7 +38,16 @@ do
 		fi
 	done
 	amounts[$day]=$(($stake-100))
+	previousTotalAmount=$totalAmount
 	totalAmount=$(($totalAmount+$(($stake-100))))
+	if [ $totalAmount -ge $previousTotalAmount ]
+	then
+		lukiestDay=$day
+	else
+		unLukiestDay=$day
+	fi
+	echo $totalAmount
+	resultantAmount[$day]=$totalAmount
 	if [ ${amounts[$day]} -eq 50 ]
 	then
 		((wonCount++))
@@ -46,8 +61,10 @@ echo ${amounts[@]}
 echo "Total Amount:"$totalAmount
 echo "Total Won:"$wonCount
 echo "Total loss:"$lossCount
+echo "resultant amount key:"${!resultantAmount[@]}
+echo "resultant amount value:"${resultantAmount[@]}
 
-
-
+echo "Luckiest day:"$lukiestDay
+echo "UnLuckiest day:"$unLukiestDay
 
 
