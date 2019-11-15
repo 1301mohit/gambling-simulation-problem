@@ -60,18 +60,19 @@ do
 			((lossCount++))
 		fi
 	done
+	echo ${!amounts[@]} 
+	echo ${amounts[@]} 
+	echo "Total Amount:"$totalAmount
+	echo "Total Won:"$wonCount
+	echo "Total loss:"$lossCount
+	echo "resultant amount key:"${!resultantAmount[@]}
+	echo "resultant amount value:"${resultantAmount[@]}
+
+	echo "Luckiest day:"$lukiestDay
+	echo "UnLuckiest day:"$unLukiestDay
 done
 
 
-echo ${!amounts[@]} 
-echo ${amounts[@]} 
-echo "Total Amount:"$totalAmount
-echo "Total Won:"$wonCount
-echo "Total loss:"$lossCount
-echo "resultant amount key:"${!resultantAmount[@]}
-echo "resultant amount value:"${resultantAmount[@]}
 
-echo "Luckiest day:"$lukiestDay
-echo "UnLuckiest day:"$unLukiestDay
 
 
